@@ -1,7 +1,7 @@
 import React from "react";
 
 function ReviewsPage() {
-  return <div>ReviewsPage</div>;
+  return <>ReviewsPage</>;
 }
 
 export default ReviewsPage;
