@@ -9,13 +9,12 @@ const initialState = {
   message: "",
 };
 
-function FormContainer({
-  action,
-  children,
-}: {
+interface FormContainerProps {
   action: actionFunction;
   children: React.ReactNode;
-}) {
+}
+
+function FormContainer({ action, children }: FormContainerProps) {
   const [state, formAction] = useFormState(action, initialState);
   const { toast } = useToast();
 
