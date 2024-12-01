@@ -1,5 +1,3 @@
-import { Button } from "@/components/ui/button";
-
 import React from "react";
 
 async function createProfileAction(formData: FormData) {
@@ -14,9 +12,6 @@ async function CreateProfilePage() {
       <div className='border p-8 rounded-md max-w-lg'>
         <form action={createProfileAction}>
           <div className='mb-2'></div>
-          <Button type='submit' size='lg'>
-            Create Profile
-          </Button>
         </form>
       </div>
     </section>
