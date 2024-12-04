@@ -21,3 +21,23 @@ export function validateWithZodSchema<T>(schema: ZodSchema<T>, data: unknown) {
   }
   return result.data;
 }
+
+export const imageSchema = z.object({
+  image: validateFile(),
+});
+
+function validateFile() {
+  const maxUploadSize = 1024 * 1024;
+  const supportedFormats = ["image/"];
+
+  return z
+    .instanceof(File)
+    .refine((file) => {
+      return !file || file.size <= maxUploadSize;
+    }, "File too large or unsupported format")
+    .refine((file) => {
+      return (
+        !file || supportedFormats.some((format) => file.type.startsWith(format))
+      );
+    }, "Unsupported file format");
+}
