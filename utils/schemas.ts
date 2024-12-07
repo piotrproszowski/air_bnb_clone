@@ -41,3 +41,42 @@ function validateFile() {
       );
     }, "Unsupported file format");
 }
+
+export const propertySchema = z.object({
+  name: z
+    .string()
+    .min(2, { message: "Name should be at least 2 characters" })
+    .max(50, { message: "Name should be at most 50 characters" }),
+  tagline: z
+    .string()
+    .min(2, { message: "tagline should be at least 2 characters" })
+    .max(50, { message: "tagline should be at most 50 characters" }),
+
+  price: z.coerce.number().int().min(0, {
+    message: "Price should be a positive number",
+  }),
+  category: z.string(),
+  description: z.string().refine(
+    (d) => {
+      const wordCount = d.trim().split(" ").length;
+      return wordCount >= 10 && wordCount <= 200;
+    },
+    {
+      message: "Description should be between 10 and 200 words",
+    },
+  ),
+  country: z.string(),
+  guests: z.coerce.number().int().min(0, {
+    message: "Guests should be a positive number",
+  }),
+  bedrooms: z.coerce.number().int().min(0, {
+    message: "Bedrooms should be a positive number",
+  }),
+  beds: z.coerce.number().int().min(0, {
+    message: "Beds should be a positive number",
+  }),
+  baths: z.coerce.number().int().min(0, {
+    message: "Baths should be a positive number",
+  }),
+  amenities: z.string(),
+});
