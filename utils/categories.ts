@@ -19,9 +19,7 @@ type CategoryLabel =
   | "Tent"
   | "Cottage"
   | "House"
-  | "Warehouse"
   | "Lighthouse"
-  | "Caravan"
   | "Container"
   | "Airstream"
   | "Tiny"
@@ -41,6 +39,5 @@ export const categories: Category[] = [
   { label: "Airstream", icon: GiMushroomHouse },
   { label: "Tiny", icon: GiMushroomHouse },
   { label: "Magic", icon: GiMushroomHouse },
-  { label: "Warehouse", icon: PiWarehouse },
   { label: "Lodge", icon: GiMushroomHouse },
 ];
