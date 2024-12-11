@@ -39,7 +39,7 @@ model Property {
   country String
   description String
   price Int
-  quests Int
+  guests Int
   bedrooms Int
   beds Int
   baths Int
