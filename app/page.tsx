@@ -1,7 +1,8 @@
+import LoadingCards from "@/components/card/LoadingCards";
 import CategoriesList from "@/components/home/CategoriesList";
 import PropertiesContainer from "@/components/home/PropertiesContainer";
-import { Button } from "@/components/ui/button";
 import React from "react";
+import { Suspense } from "react";
 
 interface SearchParamsType {
   searchParams: {
@@ -14,13 +15,15 @@ function HomePage({ searchParams }: SearchParamsType) {
   return (
     <section>
       <CategoriesList
-        category={searchParams.category}
-        search={searchParams.search}
+        category={searchParams.category!}
+        search={searchParams.search!}
       />
-      <PropertiesContainer
-        category={searchParams.category}
-        search={searchParams.search}
-      />
+      <Suspense fallback={<LoadingCards />}>
+        <PropertiesContainer
+          category={searchParams.category!}
+          search={searchParams.search!}
+        />
+      </Suspense>
     </section>
   );
 }
