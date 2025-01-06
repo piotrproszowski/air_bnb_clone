@@ -37,10 +37,9 @@ const PropertyCard = ({ property }: { property: PropertyCardProps }) => {
           </p>
           <CountryFlagAndName countryCode={country} />
         </div>
-      </Link>
-      <div className='absolute top-5 right-5 z-5 '>
         <FavoriteToggleButton propertyId={propertyId} />
-      </div>
+      </Link>
+      <div className='absolute top-5 right-5 z-5 '></div>
     </article>
   );
 };

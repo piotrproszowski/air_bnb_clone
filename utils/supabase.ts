@@ -4,6 +4,10 @@ const bucket = process.env.SUPABASE_BUCKET as string;
 const url = process.env.SUPABASE_URL as string;
 const key = process.env.SUPABASE_KEY as string;
 
+if (!bucket || !url || !key) {
+  throw new Error("Missing Supabase env variables");
+}
+
 const supabase = createClient(url, key);
 
 export const uploadImage = async (image: File) => {
