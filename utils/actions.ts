@@ -36,7 +36,7 @@ const renderError = (error: unknown): { message: string } => {
 };
 
 export const createProfileAction = async (
-  prevState: any,
+  prevState: unknown,
   formData: FormData,
 ) => {
   try {
@@ -93,7 +93,7 @@ export const fetchProfile = async () => {
 };
 
 export const updateProfileAction = async (
-  prevState: any,
+  prevState: unknown,
   formData: FormData,
 ): Promise<{ message: string }> => {
   const user = await getAuthUser();
@@ -117,23 +117,23 @@ export const updateProfileAction = async (
 };
 
 export const updateProfileImageAction = async (
-  prevState: any,
+  prevState: unknown,
   formData: FormData,
 ): Promise<{ message: string }> => {
-  const user = await getAuthUser();
   try {
+    const user = await getAuthUser();
     const image = formData.get("image") as File;
-    const validatedFields = validateWithZodSchema(imageSchema, { image });
-    const fullPath = await uploadImage(validatedFields.image);
+
+    const { image: validatedImage } = validateWithZodSchema(imageSchema, {
+      image,
+    });
+    const imageUrl = await uploadImage(validatedImage);
 
     await db.profile.update({
-      where: {
-        clerkId: user.id,
-      },
-      data: {
-        profileImage: fullPath,
-      },
+      where: { clerkId: user.id },
+      data: { profileImage: imageUrl },
     });
+
     revalidatePath("/profile");
     return { message: "Profile image updated successfully" };
   } catch (error) {
@@ -142,7 +142,7 @@ export const updateProfileImageAction = async (
 };
 
 export const createPropertyAction = async (
-  prevState: any,
+  prevState: unknown,
   formData: FormData,
 ): Promise<{ message: string }> => {
   const user = await getAuthUser();
@@ -176,13 +176,13 @@ export const fetchProperties = async ({
   category?: string;
 }) => {
   const properties = await db.property.findMany({
-    where: {
-      category,
-      OR: [
-        { name: { contains: search, mode: "insensitive" } },
-        { tagline: { contains: search, mode: "insensitive" } },
-      ],
-    },
+    // where: {
+    //   category,
+    //   OR: [
+    //     { name: { contains: search, mode: "insensitive" } },
+    //     { tagline: { contains: search, mode: "insensitive" } },
+    //   ],
+    // },
     select: {
       id: true,
       name: true,
@@ -195,7 +195,7 @@ export const fetchProperties = async ({
       createdAt: "desc",
     },
   });
-  return properties;
+  return properties || [];
 };
 
 export const fetchFavoriteId = async ({
